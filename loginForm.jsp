@@ -4,17 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0825member</title>
+<title>0825login</title>
 </head>
 <body>
-	<h1>WebContent/jsp4/insertForm.jsp</h1>
-<form action="insertPro.jsp" method = "post">
+	<h1>WebContent/jsp4/loginForm.jsp</h1>
+<form action="loginPro.jsp" method = "post">
 
 아 이 디 : <input type="text" name = "id"> <br> 
 비밀번호 : <input type="password" name = "pass"> <br>
-이    름 : <input type="text" name = "name"> <br>
 
-<input type="submit" value = "회원가입">
-</form>
+<input type="submit" value = "로그인">
 </body>
 </html>
