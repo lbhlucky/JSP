@@ -11,43 +11,31 @@
 <title>0831</title>
 </head>
 <body>
-	<h1>WebContent/jsp4/deleteForm.jsp</h1>
+	<h1>WebContent/jsp4/list.jsp</h1>
 <%
-	// 세션값 가져오기
-	String id = (String)session.getAttribute("id");
-	// 세션값 없으면 loginForm이동
-	if(id == null){
-		response.sendRedirect("loginForm.jsp");
-	}
 	Class.forName("com.mysql.jdbc.Driver");
-	
+
 	String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
 	String dbUser = "jspid";
 	String dbPass = "jsppass";
 	
 	Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
 	
-	String sql = "select * from member where id =?";
+	String sql = "select * from member";
 	
 	PreparedStatement pstmt = con.prepareStatement(sql);
 	
-	pstmt.setString(1, id);
-	
-	
-	ResultSet rs = pstmt.executeQuery(); 
-	
-	if(rs.next()) {
-		
+	ResultSet rs = pstmt.executeQuery();
 %>
-
-<form action = "deletePro.jsp" method = "post">
-아 이 디 : <input type="text" name = "id" value ="<%=rs.getString("id") %>" readonly> <br> 
-비밀번호 : <input type="password" name = "pass"> <br>
-<input type="submit" value = "회원정보삭제">
-</form>
+	<table border = "1">
+	<tr><td>아이디</td><td>비밀번호</td><td>이름</td><td>가입날짜</td></tr>	
 <%
-	}
+	while(rs.next())	{
+%>	<tr><td><%=rs.getString("id") %></td><td><%= rs.getString("pass") %></td>
+		<td><%= rs.getString("name") %></td><td><%=rs.getTimestamp("date") %></td></tr>
+<%
+		}
 %>
-
+	</table>
 </body>
 </html>

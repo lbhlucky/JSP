@@ -1,3 +1,4 @@
+<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
@@ -7,35 +8,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0825 delete</title>
+<title>0831</title>
 </head>
 <body>
-	<h1>WebContent/jsp3/deletePro.jsp</h1>
+	<h1>WebContent/jsp4/deletePro.jsp</h1>
+
 <%
-	request.setCharacterEncoding("utf-8");
-	
-	int num = Integer.parseInt(request.getParameter("num"));
-	String name = request.getParameter("name");
+request.setCharacterEncoding("utf-8");
 
-	Class.forName("com.mysql.jdbc.Driver");
-// 	Class.forName("oracle.jdbc.driver.OracleDriver");		// 오라클 드라이버
-// 	String dbUrl = "jdbc:oracle:jspdb1:@localhost:1521:XE";	// 오라클 주소
-	String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
-	String dbUser = "root";
-	String dbPass = "1234";
-	
-	Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-	
-	String sql = "DELETE FROM student WHERE num=? and name=?";
-	
-	PreparedStatement pstmt = con.prepareStatement(sql);
-	
-	pstmt.setInt(1, num);
-	pstmt.setString(2, name);
-	
-	pstmt.executeUpdate();
+String id = (String)session.getAttribute("id");
+String pass = request.getParameter("pass");
 
+Class.forName("com.mysql.jdbc.Driver");
+
+String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
+String dbUser = "jspid";
+String dbPass = "jsppass";
+
+Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+
+String sql = "select * from member where id = ?";
+
+PreparedStatement pstmt = con.prepareStatement(sql);
+
+pstmt.setString(1, id);
+
+ResultSet rs = pstmt.executeQuery();
+
+if(rs.next()) {
+	if (pass.equals(rs.getString("pass"))) {
+		sql = "delete from member where id =? and pass =?";
+		
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setString(1, id);
+		pstmt.setString(2, pass);
+		
+		pstmt.executeUpdate();
+		
+		session.invalidate();	// 세션값 전체 삭제
+		
+		%>
+		<script type="text/javascript">
+			alert("삭제 완료!");
+			location.href("main.jsp");
+		</script>
+		<% 
+	} else {
+		%>
+		<script>
+			alert("비밀번호 틀림!");
+			history.back();
+		</script>
+		<%
+	}
+} else {
+	 %>
+	 	<script>
+			alert("아이디 틀림!");
+			history.back();
+		</script>
+		<%
+}
 %>
-학생 삭제 성공 : <%= pstmt %>
 </body>
 </html>
