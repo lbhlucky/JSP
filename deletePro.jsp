@@ -8,68 +8,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0831</title>
+<title>0908 게시판</title>
 </head>
 <body>
-	<h1>WebContent/jsp4/deletePro.jsp</h1>
+<h1>WebContent/jsp5/deletePro.jsp</h1>
 
 <%
-request.setCharacterEncoding("utf-8");
-
-String id = (String)session.getAttribute("id");
-String pass = request.getParameter("pass");
-
-Class.forName("com.mysql.jdbc.Driver");
-
-String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
-String dbUser = "jspid";
-String dbPass = "jsppass";
-
-Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-
-String sql = "select * from member where id = ?";
-
-PreparedStatement pstmt = con.prepareStatement(sql);
-
-pstmt.setString(1, id);
-
-ResultSet rs = pstmt.executeQuery();
-
-if(rs.next()) {
-	if (pass.equals(rs.getString("pass"))) {
-		sql = "delete from member where id =? and pass =?";
-		
-		pstmt = con.prepareStatement(sql);
-		
-		pstmt.setString(1, id);
-		pstmt.setString(2, pass);
-		
-		pstmt.executeUpdate();
-		
-		session.invalidate();	// 세션값 전체 삭제
-		
-		%>
-		<script type="text/javascript">
-			alert("삭제 완료!");
-			location.href("main.jsp");
-		</script>
-		<% 
-	} else {
-		%>
-		<script>
-			alert("비밀번호 틀림!");
-			history.back();
-		</script>
-		<%
+	request.setCharacterEncoding("utf-8");
+	
+	int num = Integer.parseInt(request.getParameter("num"));
+	String pass = request.getParameter("pass");
+	
+	Class.forName("com.mysql.jdbc.Driver");
+	
+	String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
+	String dbUser = "jspid";
+	String dbPass = "jsppass";
+	
+	Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+	
+	String sql = "select * from board where num =?";
+	
+	PreparedStatement p = con.prepareStatement(sql);
+	p.setInt(1, num);
+	
+	ResultSet rs = p.executeQuery();
+	
+	if(rs.next()) {
+		if(pass.equals(rs.getString("pass"))) {
+			sql = "delete from board where num=? and pass =?";
+			p = con.prepareStatement(sql);
+			
+			p.setInt(1, num);
+			p.setString(2, pass);
+			
+			p.executeUpdate();
+%>
+	<script>
+		alert("삭제 성공");
+		location.href = "list.jsp";
+	</script>
+<%
+		}
 	}
-} else {
-	 %>
-	 	<script>
-			alert("아이디 틀림!");
-			history.back();
-		</script>
-		<%
-}
 %>
 </body>
 </html>
