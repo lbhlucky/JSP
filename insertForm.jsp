@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0825member</title>
+<title>0911member</title>
 </head>
 <body>
-	<h1>WebContent/jsp4/insertForm.jsp</h1>
+	<h1>WebContent/member/insertForm.jsp</h1>
 <form action="insertPro.jsp" method = "post">
 
 아 이 디 : <input type="text" name = "id"> <br> 

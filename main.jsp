@@ -29,7 +29,17 @@
 
 <a href ="deleteForm.jsp">회원정보삭제</a>
 
-<a href ="list.jsp">회원목록</a>
+
+<%
+	if(id != null) {
+		if(id.equals("admin")) 
+%>
+			
+		<a href ="list.jsp">회원목록</a>
+<% 
+	}
+%>
+
 
 </body>
 </html>
