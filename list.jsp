@@ -1,3 +1,5 @@
+<%@page import="board.BoardBean"%>
+<%@page import="board.BoardDAO"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -8,11 +10,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0907 게시판</title>
+<title>0914 게시판</title>
 </head>
 <body>
-	<h1>WebContent/jsp5/list.jsp</h1>
+	<h1>WebContent/board/list.jsp</h1>
 	<%
+request.setCharacterEncoding("utf-8");
+	
 		//1단계
 	Class.forName("com.mysql.jdbc.Driver");
 
@@ -30,6 +34,13 @@
 
 	// 결과 저장 rs
 	ResultSet rs = pstmt.executeQuery();
+
+// int num = Integer.parseInt(request.getParameter("num"));
+
+// 	BoardDAO bdao = new BoardDAO();
+	
+	
+// 	BoardBean bb = bdao.getBoard(num);
 	%>
 	<table border="1">
 		<tr>
@@ -49,6 +60,15 @@
 			<td><%=rs.getTimestamp("date")%></td>
 			<td><%=rs.getInt("readcount")%></td>
 		</tr>
+		
+		
+<!-- 		<tr> -->
+<%-- 			<td><%=bb.getNum()%></td> --%>
+<%-- 			<td><a href="content.jsp?num=<%=bb.getNum()%>"><%=bb.getSubject()%></a></td> --%>
+<%-- 			<td><%=bb.getName()%></td> --%>
+<%-- 			<td><%=bb.getContent()%></td> --%>
+<%-- 			<td><%=bb.getReadcount()%></td> --%>
+<!-- 		</tr> -->
 		<%
 			}
 		%>

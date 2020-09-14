@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0907 게시판</title>
+<title>0914 게시판</title>
 </head>
 <body>
-	<h1>WebContent/jsp5/writeForm.jsp</h1>
+	<h1>WebContent/board/writeForm.jsp</h1>
 	<form action="writePro.jsp" method="post">
 		<table border="1">
 			<tr>
