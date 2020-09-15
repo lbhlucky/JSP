@@ -1,3 +1,5 @@
+<%@page import="member.MemberBean"%>
+<%@page import="member.MemberDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -8,43 +10,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0908 게시판</title>
+<title>0915 member</title>
 </head>
 <body>
-<h1>WebContent/jsp5/deleteForm.jsp</h1>
+	<h1>WebContent/member/deleteForm.jsp</h1>
 <%
-	request.setCharacterEncoding("utf-8");
-	
-// int num 파라미터 가져오기
-	int num = Integer.parseInt(request.getParameter("num"));
-	
-	Class.forName("com.mysql.jdbc.Driver");
-	
-	String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
-	String dbUser = "jspid";
-	String dbPass = "jsppass";
-	
-	Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-	
-	String sql = "select * from board where num =?";
-	
-	PreparedStatement p = con.prepareStatement(sql);
-	
-	p.setInt(1, num);
-	
-	ResultSet rs = p.executeQuery();
-	
-	if(rs.next()) {
-%>
-<form action="deletePro.jsp" method="post">
-<input type="hidden" name ="num" value ="<%=num%>">
-<table border="1">
-<tr><td>비밀번호</td><td><input type="password" name="pass"<%=rs.getString("pass")%>></td></tr>
-<tr><td colspan="2"><input type="submit" value="글삭제" ></td></tr>    
-</table>
-<%
+	// 세션값 가져오기
+	String id = (String)session.getAttribute("id");
+	// 세션값 없으면 loginForm이동
+	if(id == null){
+		response.sendRedirect("loginForm.jsp");
 	}
+	
+	// MemberDAO mdao 객체생성
+	MemberDAO mdao = new MemberDAO();
+	// MemberBean mb = getMember(id) 메서드
+	MemberBean mb = mdao.getMember(id);
+		
 %>
+
+<form action = "deletePro.jsp" method = "post">
+아 이 디 : <input type="text" name = "id" value ="<%=mb.getId() %>" readonly> <br> 
+비밀번호 : <input type="password" name = "pass"> <br>
+<input type="submit" value = "회원정보삭제">
 </form>
+
 </body>
 </html>

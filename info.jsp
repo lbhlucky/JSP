@@ -13,7 +13,7 @@
 <title>0825 info</title>
 </head>
 <body>
-	<h1>WebContent/jsp4/info.jsp</h1>
+	<h1>WebContent/member/info.jsp</h1>
 	<h2>나의 정보 조회</h2>
 <%
 	request.setCharacterEncoding("utf-8");

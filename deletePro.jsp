@@ -1,56 +1,58 @@
+<%@page import="member.MemberDAO"%>
+<%@page import="member.MemberBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0908 게시판</title>
+<title>0915 member</title>
 </head>
 <body>
-<h1>WebContent/jsp5/deletePro.jsp</h1>
+	<h1>WebContent/member/deletePro.jsp</h1>
 
-<%
-	request.setCharacterEncoding("utf-8");
-	
-	int num = Integer.parseInt(request.getParameter("num"));
+	<%
+		request.setCharacterEncoding("utf-8");
+
+	String id = (String) session.getAttribute("id");
 	String pass = request.getParameter("pass");
+
+	MemberDAO mdao = new MemberDAO();
+	int check = mdao.userCheck(id, pass);
+
+	if (check == 1) {
+		MemberBean mb = new MemberBean();
+		mb.setId(id);
+		mb.setPass(pass);
 	
-	Class.forName("com.mysql.jdbc.Driver");
-	
-	String dbUrl = "jdbc:mysql://localhost:3306/jspdb1";
-	String dbUser = "jspid";
-	String dbPass = "jsppass";
-	
-	Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-	
-	String sql = "select * from board where num =?";
-	
-	PreparedStatement p = con.prepareStatement(sql);
-	p.setInt(1, num);
-	
-	ResultSet rs = p.executeQuery();
-	
-	if(rs.next()) {
-		if(pass.equals(rs.getString("pass"))) {
-			sql = "delete from board where num=? and pass =?";
-			p = con.prepareStatement(sql);
-			
-			p.setInt(1, num);
-			p.setString(2, pass);
-			
-			p.executeUpdate();
-%>
-	<script>
-		alert("삭제 성공");
-		location.href = "list.jsp";
+		mdao.deleteMember(mb);
+		
+		session.invalidate();
+	%>
+	<script type="text/javascript">
+		alert("삭제 완료!");
+		location.href("main.jsp");
 	</script>
-<%
+	<%
+		} else if (check == 0) {
+	%>
+	<script>
+		alert("비밀번호 틀림!");
+		history.back();
+	</script>
+	<%
+		} else {
+	%>
+	<script>
+		alert("아이디 틀림!");
+		history.back();
+	</script>
+	<%
 		}
-	}
-%>
+	%>
 </body>
 </html>
