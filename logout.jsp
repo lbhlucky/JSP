@@ -4,17 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>0825 logout</title>
+<title>Logout</title>
 </head>
 <body>
-	<h1>WebContent/jsp4/logout.jsp</h1>
+<h1>Logout</h1>
 <%
-	// 세션값 전체 삭제
-	session.invalidate();
+// member/logout.jsp
+// 세션값 초기화(전체삭제)
+session.invalidate();
 %>
 <script type="text/javascript">
-	 alert("로그아웃!") 
-	 location.href = "main.jsp";
+	alert("로그아웃");
+	location.href="../main/main.jsp";
 </script>
 </body>
 </html>

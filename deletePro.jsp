@@ -1,11 +1,7 @@
-<%@page import="member.MemberDAO"%>
 <%@page import="member.MemberBean"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+<%@page import="member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +31,7 @@
 	%>
 	<script type="text/javascript">
 		alert("삭제 완료!");
-		location.href("main.jsp");
+		location.href = ("../main/main.jsp");
 	</script>
 	<%
 		} else if (check == 0) {
@@ -48,7 +44,7 @@
 		} else {
 	%>
 	<script>
-		alert("아이디 틀림!");
+		alert("아이디 없음!");
 		history.back();
 	</script>
 	<%
